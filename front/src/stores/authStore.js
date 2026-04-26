@@ -30,8 +30,28 @@ const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const searchInput = async (username, suggestions, showSuggestions) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/users/search?username=${encodeURIComponent(username)}`);  
+      suggestions.value = await res.json();      
+      showSuggestions.value = true; 
+    } catch (err) {
+      console.error('Search failed:', err);
+    }
+  };
+
+  const searchEmail = async (email, suggestions, showSuggestions) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/users/search-email?email=${encodeURIComponent(email)}`);
+    suggestions.value = await res.json();
+    showSuggestions.value = true;
+  } catch (err) {
+    console.error('Email search failed:', err);
+  }
+};
+
   return {
-    user, register, flashMessage, setFlashMessage
+    user, register, flashMessage, setFlashMessage, searchInput, searchEmail
   };
 });
 
