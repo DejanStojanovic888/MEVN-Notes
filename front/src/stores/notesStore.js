@@ -1,6 +1,9 @@
 import { defineStore } from "pinia";
 
 const useNotesStore = defineStore("notes", () => {
+
+    const notes = ref([]);
+
     async function saveNote(title, content) {
         const response = await fetch("http://localhost:3000/api/notes", {
             method: "POST",
@@ -10,10 +13,11 @@ const useNotesStore = defineStore("notes", () => {
             credentials: "include",
             body: JSON.stringify({ title, content }),
         })
-        if (response.ok) {
-            const data = await response.json();
-            return data;
+        if(!response.ok) {
+            throw new Error("Failed to save note");
         }
+        const data = await response.json();
+        notes.value.push(data);
     }
 
     async function fetchNotes() {
@@ -28,7 +32,8 @@ const useNotesStore = defineStore("notes", () => {
             throw new Error("Failed to fetch notes");
         }
         const data = await response.json();
-        return data.notes;
+        // return data.notes;
+        notes.value = data.notes;
         
     }
 

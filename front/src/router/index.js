@@ -44,14 +44,6 @@ router.beforeEach(async (to) => {  // ovo se prvo opaljuje ali samo na REFRESH !
   if (to.meta.requiresGuest && store.user) {
     return '/dashboard';  // ako pokusamo da idemo na na primer /register a vec smo ulogovani, vraca nas na /dashboard
   }
-
-  // if (to.matched.some(r => r.meta.requiresAuth) && !store.user) {
-  //   return '/login';
-  // }
-
-  // if (to.matched.some(r => r.meta.requiresGuest) && store.user) {
-  //   return '/dashboard';
-  // }
 })
 
 export default router

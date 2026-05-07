@@ -9,7 +9,6 @@ const notes = ref([]);
 onMounted(async () => {
   try {
     const response = await noteStore.fetchNotes();
-    // console.log(response);
     notes.value = response; 
   } catch (error) {
     console.error(error);

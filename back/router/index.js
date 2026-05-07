@@ -65,7 +65,6 @@ router.post('/notes', async (req, res) => {
 })
 
 router.get('/notes', async (req, res) => {
-    console.log(req.session.user)
     if(!req.session.user) {  // BITNO!
         res.status(401).json({ message: 'Not authenticated' }); // ako nije logovan
         return;
