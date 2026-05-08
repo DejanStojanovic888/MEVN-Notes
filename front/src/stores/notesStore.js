@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
 const useNotesStore = defineStore("notes", () => {
 
@@ -34,11 +35,9 @@ const useNotesStore = defineStore("notes", () => {
         const data = await response.json();
         // return data.notes;
         notes.value = data.notes;
-        
     }
 
-
-    return { saveNote, fetchNotes };
+    return { saveNote, fetchNotes, notes };
 });
 
 export default useNotesStore;

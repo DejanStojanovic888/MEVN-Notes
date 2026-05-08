@@ -49,7 +49,6 @@ router.post('/logout', (req, res) => {
 
 // Notes routes(kreiranje, citanje, update, delete pa testiramo pomocu REST-a)
 router.post('/notes', async (req, res) => {
-    console.log(req.body)
     if(!req.session.user) {  // BITNO!
         res.status(401).json({ message: 'Not authenticated' }); // ako nije logovan
         return;
@@ -75,7 +74,6 @@ router.get('/notes', async (req, res) => {
     } catch (e) {
         res.status(400).json({ message: e.message });
     }
-    
 })
 
 ////

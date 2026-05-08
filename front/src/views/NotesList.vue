@@ -1,31 +1,46 @@
 <script setup>
 import useNotesStore from '@/stores/notesStore';
+import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 
 const noteStore = useNotesStore();
 
-const notes = ref([]);
+const { notes } = storeToRefs(noteStore)
 
 onMounted(async () => {
+  if (notes.value.length > 0) {
+    return;
+  }
   try {
-    const response = await noteStore.fetchNotes();
-    notes.value = response; 
+    await noteStore.fetchNotes();
   } catch (error) {
     console.error(error);
   }
 })
+
+const grid = ref(false)
 </script>
 
 <template>
-  <h2>All notes:</h2>
-  <ul>
-    <li v-for="note in notes" :key="note.id">
+  <div class="one">
+    <h2>All notes:</h2>
+    <i @click="grid = !grid" class="bi bi-grid-3x2-gap-fill"></i>
+  </div>
+  <div  :class="grid ? 'grid' : ''">
+    <article v-for="note in notes" :key="note.id">
       <h2>{{ note.title }}</h2>
       <p>{{ note.content }}</p>
-    </li>
-  </ul>
+    </article>
+  </div>
 </template>
 
 <style lang = 'sass' scoped>
-
+.one
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 20px
+  margin-top: 20px
+i
+  cursor: pointer 
 </style>
